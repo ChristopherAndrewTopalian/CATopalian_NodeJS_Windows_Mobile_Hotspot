@@ -1,4 +1,4 @@
-# CATopalian NodeJS Wi-Fi
+# CATopalian NodeJS Windows Mobile Hotspot
 On Windows, using a USB Wi-Fi Antenna and with Wi-Fi turned On we create a mobile hotspot and we communicate with our mobile devices using our created network.
 
 ---
