@@ -174,7 +174,7 @@ h1
 
 This starts our server on port 5500
 
-![command_prompt_type_node_server](src/media/textures/screenshots/command_prompt_type_node_server.png)
+![command_prompt_type_node_server](src/media/textures/screenshots/command_prompt_type_node_server.PNG)
 
 
 ---
