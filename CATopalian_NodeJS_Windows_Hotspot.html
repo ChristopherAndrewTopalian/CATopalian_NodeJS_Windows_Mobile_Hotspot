@@ -1,0 +1,230 @@
+<!-- Dedicated to God the Father -->
+<!-- All Rights Reserved Christopher Andrew Topalian Copyright 2000-2026 -->
+<!-- https://github.com/ChristopherTopalian -->
+<!-- https://github.com/ChristopherAndrewTopalian -->
+<!-- CATopalian_NodeJS_Windows_Hotspot.html -->
+
+<!DOCTYPE html>
+<html lang = 'en'>
+<head>
+<title> CATopalian NodeJS Windows Hotspot </title>
+
+<meta charset = 'UTF-8'>
+
+<meta name = 'viewport' content = 'width = device-width, initial-scale = 1.0'>
+
+<style>
+
+body
+{
+    background-color: rgb(30, 30, 30);
+    font-family: Arial;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}   
+
+.tutorial-image {
+    max-width: 70%;
+    height: auto;
+    border: 2px solid rgb(70, 70, 70);
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+a
+{
+    color: rgb(170, 170, 170);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body onload = 'applyCustomHighlighting();'>
+
+<div>
+
+<div>
+    <a href = 'https://github.com/ChristopherAndrewTopalian/CATopalian_NodeJS_Windows_Mobile_Hotspot'>CATopalian NodeJS Windows Mobile Hotspot </a>
+</div>
+<hr>
+
+<h1> IoT Networking: Establishing a Subspace Hotspot </h1>
+
+<p> Welcome to Hardware Engineering! Before our 3D tactical holograms can visualize live data from external sensors, we must establish a secure, local communications network. On Windows, using a standard Wi-Fi antenna, we can configure our main computer to act as a central server (a Mobile Hotspot). We will then connect our mobile devices to this network and use Node.js to broadcast our very first server response! </p>
+
+<hr>
+
+<h2> Phase 1: Activate Main Comm Array </h2>
+
+<p> First, we must ensure our primary Wi-Fi capabilities are online. Search your Start menu for: <strong>WiFi</strong> </p>
+
+<img src="src/media/textures/screenshots/search_for_wifi.PNG" alt="Search for WiFi" class="tutorial-image">
+
+<p> Toggle your <strong>Wi-Fi</strong> connection to the <strong>On</strong> position. </p>
+
+<img src="src/media/textures/screenshots/wifi_turned_on.PNG" alt="WiFi turned on" class="tutorial-image">
+
+<hr>
+
+<h2> Phase 2: Establish the Mobile Hotspot </h2>
+
+<p> Now we transform our computer into a local broadcast tower. Turn On our <strong>Mobile Hotspot</strong>. It shows us the <strong>Network Name</strong> and <strong>Network Password</strong>. </p>
+
+<img src="src/media/textures/screenshots/mobile_hotspot_turned_on.png" alt="Mobile Hotspot turned on" class="tutorial-image">
+
+<blockquote>
+    <strong>Engineering Warning:</strong> Make sure to turn <strong>Power Saving</strong> off, or else it will keep disabling the hotspot when it doesn't have a device connected.
+</blockquote>
+
+<hr>
+
+<h2> Phase 3: Override Power Constraints </h2>
+
+<p> To ensure our connection never drops, we must override the hardware power settings. Search the Start menu for: <strong>Device Manager</strong>. </p>
+
+<p> In <strong>Device Manager</strong> > <strong>Network Adapters</strong> > <strong>TP-Link (or the model you own)</strong>, we <strong>RIGHT CLICK</strong> on the adapter and choose <strong>PROPERTIES</strong>. </p>
+
+<p> We <strong>UNCHECK the Box</strong> for <em>"Allow the computer to turn off this device to save power"</em> and press <strong>OK</strong>. This way our connection will always stay on instead. </p>
+
+<img src="src/media/textures/screenshots/device_manager_network_adapter_power_settings.png" alt="Device Manager Power Settings" class="tutorial-image">
+
+<hr>
+
+<h2> Phase 4: Connect the Mobile Device </h2>
+
+<p> In our Cell phone Wireless Settings, we make sure Wireless is turned on. </p>
+
+<img src="src/media/textures/screenshots/turn_wireless_on.png" alt="Turn Wireless On" class="tutorial-image">
+
+<p> <strong>Connect our Cell phone to our Network:</strong> </p>
+<ul>
+    <li> In our Cell phone click on Settings > Wi-Fi </li>
+    <li> <strong>Connect to DESKTOP-ZTEQQTT 4554</strong> (or your specific Network Name) </li>
+    <li> Enter the password you noted in Phase 2. </li>
+</ul>
+
+<img src="src/media/textures/screenshots/connect_to_wireless_network.png" alt="Connect to Wireless Network" class="tutorial-image">
+
+<p> Now our phone is connected to our computer network! </p>
+
+<hr>
+
+<h2> Phase 5: Get Computer's Address </h2>
+
+<p> For our computer and mobile devices to communicate, the mobile devices need our computer's exact address. </p>
+
+<ol>
+    <li> Open our Windows Command Prompt (type <strong>cmd</strong> into the start menu). </li>
+    <li> In Command Prompt we Type <strong><code>ipconfig</code></strong> and press <strong>Enter</strong>. </li>
+    <li> Scroll to find <strong>Wireless LAN adapter Local Area Connection</strong> (or it might say Mobile Hotspot). </li>
+    <li> Look for the <strong>IPv4 Address</strong>. It will look like: <strong>192.168.1.100</strong> </li>
+</ol>
+
+<p> Write that down. This is the "front door" of our server. </p>
+
+<img src="src/media/textures/screenshots/command_prompt_showing_ipv4_address.png" alt="Command Prompt showing IPv4 Address" class="tutorial-image">
+
+<hr>
+
+<h2> Phase 6: Construct the Node.js Server </h2>
+
+<p> Make a New Folder and Name It <strong>our_project</strong>. We will put our <code>server.js</code> and <code>index.html</code> in this folder. </p>
+
+<h3> // The Server Script (server.js) </h3>
+<pre><code class="custom-code">const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer(function(req, res)
+{
+    // read the index.html file located in the same folder
+    fs.readFile('index.html', function(err, data)
+    {
+        if (err)
+        {
+            res.writeHead(404);
+            res.end("Error: index.html not found!");
+            return;
+        }
+
+        // send the HTML file to the browser
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(data);
+    });
+});
+
+// listen on port 5500 on all network interfaces (0.0.0.0)
+server.listen(5500, '0.0.0.0', function()
+{
+    console.log("Server is running!");
+    console.log("On your phone, go to: http://[YOUR_IPV4_ADDRESS]:5500/index.html");
+});
+</code></pre>
+
+<hr><hr>
+
+<h3> The Interface (index.html) </h3>
+<pre><code class="custom-code">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Tutorial Project&lt;/title&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;style&gt;
+body
+{
+    font-family: sans-serif;
+    text-align: center;
+    padding: 50px 20px;
+    background-color: rgb(30, 30, 30);
+    color: rgb(255, 255, 255);
+}
+h1
+{
+    color: rgb(70, 70, 70);
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h1&gt; Connection Successful! &lt;/h1&gt;
+    &lt;p&gt; Our mobile device is now talking to our Node.js server. &lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<hr>
+
+<h2> Phase 7: Boot Up the Server! </h2>
+
+<p> In our folder that has our <code>server.js</code> and <code>index.html</code> files, we put our mouse arrow in the <strong>address bar</strong> and we type <strong>cmd</strong> and press <strong>Enter</strong>. </p>
+
+<img src="src/media/textures/screenshots/type_cmd_in_address_bar_of_project_folder.png" alt="Type cmd in address bar" class="tutorial-image">
+
+<p> This opens the Command prompt with our folder as the directory chosen. In the Command Prompt we opened, we now type: </p>
+
+<pre><code class="custom-code">node server.js</code></pre>
+
+<p> Press <strong>Enter</strong>. This starts our server on port 5500! </p>
+
+<img src="src/media/textures/screenshots/command_prompt_type_node_server.PNG" alt="Command prompt running node server" class="tutorial-image">
+
+<hr>
+
+<h2> Phase 8: The Final Test </h2>
+
+<p> On our Cell Phone Browser we type the Address we found earlier, adding our port and filename: <strong><code>192.168.1.100:5500/index.html</code></strong> </p>
+
+<img src="src/media/textures/screenshots/mobile_device_loading_index.png" alt="Mobile browser loading index" class="tutorial-image">
+
+<p> If successful, your phone screen will light up with your custom HTML page! You have officially bridged the gap! </p>
+
+</div>
+
+</body>
+
+</html>
+
