@@ -3,6 +3,10 @@ On Windows, using a USB Wi-Fi Antenna and with Wi-Fi turned On we create a mobil
 
 ---
 
+[HTML version](https://christopherandrewtopalian.github.io/CATopalian_NodeJS_Windows_Mobile_Hotspot/CATopalian_NodeJS_Windows_Hotspot.html)  
+
+---
+
 ## Search for: **WiFi**
 ![](src/media/textures/screenshots/search_for_wifi.PNG)
 
